@@ -2,16 +2,20 @@ import mysql from "mysql";
 import express from 'express';
 import 'dotenv/config'
 
-let connection = mysql.createConnection({
-    host     : process.env.HOST,
-    user     : process.env.USER,
-    password : process.env.PASSWORD,
-    database : process.env.DATABASE
-});
-   
-connection.connect();
 
 const app = express()
+let connection = mysql.createConnection({
+  host     : process.env.HOST,
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
+  database : process.env.DATABASE
+});
+ 
+connection.connect();
+
+
+app.use(cors())
+
 
 app.get('/', (req, res) => {
     connection.query("SELECT * FROM Users WHERE username = 'razmikayelyan'", function (error, results, fields) {
