@@ -7,7 +7,7 @@ let connection = mysql.createConnection({
     user     : process.env.USER,
     password : process.env.PASSWORD,
     database : process.env.DATABASE
-  });
+});
    
 connection.connect();
 
@@ -29,7 +29,7 @@ app.get('/values', (req, res) => {
     });
 })
 
-app.listen(6969 , (ok, err) =>{
+app.listen(process.env.PORT , (ok, err) =>{
     if(err) connection.end();
 })
 
