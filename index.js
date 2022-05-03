@@ -5,17 +5,17 @@ import cors from "cors";
 
 
 const app = express()
-let connection = mysql.createConnection({
-  host     : process.env.HOST,
-  user     : process.env.USER,
-  password : process.env.PASSWORD,
-  database : process.env.DATABASE
-});
+// let connection = mysql.createConnection({
+//   host     : process.env.HOST,
+//   user     : process.env.USER,
+//   password : process.env.PASSWORD,
+//   database : process.env.DATABASE
+// });
  
-connection.connect();
+// connection.connect();
 
 
-app.use(cors())
+// app.use(cors())
 
 
 app.get('/', (req, res) => {
