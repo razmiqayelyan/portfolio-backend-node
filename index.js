@@ -19,19 +19,12 @@ const app = express()
 
 
 app.get('/', (req, res) => {
-    connection.query("SELECT * FROM Users WHERE username = 'razmikayelyan'", function (error, results, fields) {
-        if (error) throw error;
-        res.send(results)
-      });
+    res.send("Works Good")
        
 })
 
 app.get('/values', (req, res) => {
-    var sql = "INSERT INTO Users (username, email, password) VALUES ('newuser', 'newuser@gmail.com', '123456')";
-    connection.query(sql, function (err, result) {
-      if (err) throw err;
-     res.send("OK");
-    });
+    res.send("Works Greate")
 })
 
 app.listen(process.env.PORT , (ok, err) =>{
