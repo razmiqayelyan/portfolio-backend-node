@@ -5,17 +5,15 @@ import cors from "cors";
 
 
 const app = express()
-// let connection = mysql.createConnection({
-//   host     : process.env.HOST,
-//   user     : process.env.USER,
-//   password : process.env.PASSWORD,
-//   database : process.env.DATABASE
-// });
+let connection = mysql.createConnection({
+  host     : process.env.HOST,
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
+  database : process.env.DATABASE
+});
  
-// connection.connect();
 
 
-// app.use(cors())
 
 
 app.get('/', (req, res) => {
@@ -24,8 +22,13 @@ app.get('/', (req, res) => {
 })
 
 app.get('/values', (req, res) => {
-    res.send("Works Greate")
+     connection.query('SELECT * FROM Users', function (err, result) {
+        if (err) console.log(err.message);
+        res.send(result)
+});
 })
+
+
 
 app.listen(process.env.PORT , (ok, err) =>{
     if(err) connection.end();
