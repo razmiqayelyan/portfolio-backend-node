@@ -18,11 +18,9 @@ let connection = mysql.createConnection({
 
 app.get('/', function(req, res){
     var options = {
-        root: path.join(__dirname)
+        root: path.join(__dirname, '/51780.jpg')
     };
-     
-    var fileName = '51780.jpg';
-    res.sendFile(fileName, options)
+    res.sendFile(options)
 });
 
 app.get('/values', (req, res) => {
