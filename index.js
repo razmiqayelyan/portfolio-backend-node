@@ -16,10 +16,14 @@ let connection = mysql.createConnection({
 
 
 
-app.get('/', (req, res) => {
-    res.send("Works Good")
-       
-})
+app.get('/', function(req, res){
+    var options = {
+        root: path.join(__dirname)
+    };
+     
+    var fileName = '51780.jpg';
+    res.sendFile(fileName, options)
+});
 
 app.get('/values', (req, res) => {
      connection.query('SELECT * FROM Users', function (err, result) {
