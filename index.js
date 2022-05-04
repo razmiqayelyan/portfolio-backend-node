@@ -2,7 +2,7 @@ import mysql from "mysql";
 import express from 'express';
 import 'dotenv/config';
 import cors from "cors";
-
+import path from "path"
 
 const app = express()
 let connection = mysql.createConnection({
