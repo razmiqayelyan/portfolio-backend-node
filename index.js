@@ -6,10 +6,10 @@ import cors from "cors";
 
 const app = express()
 let connection = mysql.createConnection({
-  host     : 'sql779.main-hosting.eu'   /*process.env.HOST*/,
-  user     : 'u414743078_razo' /*process.env.USER*/,
-  password : 'Kotik2001.' /*process.env.PASSWORD*/,
-  database :'u414743078_razo'  /*process.env.DATABASE*/,
+  host     : process.env.HOST,
+  user     : process.env.USER,
+  password : process.env.PASSWORD,
+  database : process.env.DATABASE
 });
  
 
@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.get('/values', (req, res) => {
      connection.query('SELECT * FROM Users', function (err, result) {
-        if (err) console.log(err.message);
+        if (err) console.log(err);
         res.send(result)
 });
 })
