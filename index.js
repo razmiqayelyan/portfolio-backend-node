@@ -12,15 +12,13 @@ let connection = mysql.createConnection({
   database : process.env.DATABASE
 });
  
-
+app.use(express.static(path.join(__dirname, 'public')))
 
 
 
 app.get('/', function(req, res){
-    var options = {
-        root: path.join(__dirname, '/51780.jpg')
-    };
-    res.sendFile(options)
+
+    res.sendFile(path.join(__dirname, '/public/img.jpg'));
 });
 
 app.get('/values', (req, res) => {
