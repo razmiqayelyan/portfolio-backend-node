@@ -2,7 +2,7 @@ import mysql from "mysql";
 import express from 'express';
 import 'dotenv/config';
 import cors from "cors";
-import path from "path"
+
 
 const app = express()
 let connection = mysql.createConnection({
@@ -12,14 +12,14 @@ let connection = mysql.createConnection({
   database : process.env.DATABASE
 });
  
-app.use(express.static(path.join(__dirname, 'public')))
 
 
 
-app.get('/', function(req, res){
 
-    res.sendFile(path.join(__dirname, '/public/img.jpg'));
-});
+app.get('/', (req, res) => {
+    res.send("Works Good")
+       
+})
 
 app.get('/values', (req, res) => {
      connection.query('SELECT * FROM Users', function (err, result) {
