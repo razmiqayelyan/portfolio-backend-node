@@ -22,7 +22,7 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.send("Hello")
+  res.redirect('/public/index.html')
 })
 
 app.get('/values', (req, res) => {
