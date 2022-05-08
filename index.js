@@ -18,7 +18,8 @@ app.use(express.urlencoded())
 app.use(express.static(__dirname + "/public"))
 const myLogger = function (req, res, next) {
   if(req.method !== 'POST' ||  priv === true){
-    res.redirect('public/index.html')
+    res.redirect('/index.html')
+    next()
   }else{
     next()
   }
