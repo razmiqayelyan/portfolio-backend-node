@@ -18,13 +18,13 @@ app.use(express.json())
 app.use(express.urlencoded())
 const myLogger = function (req, res, next) {
   if(req.method !== 'POST' && priv === true){
-    req.url = '/'
+    req.url = '/index.html'
   }
   next()
 }
 
-app.use(myLogger)
 app.use(express.static(__dirname + "/public"))
+app.use(myLogger)
 
 
 let connection = mysql.createConnection({
