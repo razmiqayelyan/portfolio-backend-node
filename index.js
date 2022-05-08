@@ -11,7 +11,6 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-app.use(express.static("public"))
 
 let connection = mysql.createConnection({
   host     : process.env.HOST,
@@ -22,7 +21,7 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.send("Hello")
+  res.send("Hello World")
 })
 
 app.get('/values', (req, res) => {
