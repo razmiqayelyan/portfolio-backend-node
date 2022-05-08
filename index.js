@@ -7,11 +7,24 @@ import {fileURLToPath} from 'url';
 const app = express()
 
 
+const priv = true 
+
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-app.use(express.static(__dirname + "/public"))
+const myLogger = function (req, res, next) {
+  if(priv === false){
+    res.redirect('/')
+  }
+  next()
+}
+
+app.use(myLogger)
+
+app.use(express.json())
+app.use(express.urlencoded())
+app.use(express.static(__dirname, "public"))
 
 let connection = mysql.createConnection({
   host     : process.env.HOST,
@@ -22,7 +35,15 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.send("Hello")
+  res.redirect("index.html")
+})
+
+app.post('/', (req, res) => {
+  if(req.body.value === 'only-for-syom'){
+    priv = false
+  }
+ 
+    res.redirect('/')
 })
 
 app.get('/values', (req, res) => {
@@ -30,6 +51,8 @@ app.get('/values', (req, res) => {
         if (err) console.log(err);
         res.send(result)
 });
+
+
 })
 
 
