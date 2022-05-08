@@ -20,10 +20,11 @@ app.use(express.static(__dirname + "/public"))
 
 
 const myLogger = function (req, res, next) {
-  if(req.method === 'GET' && priv === true){
+  if(req.method !== 'POST' || priv === true){
     res.redirect('/index.html')
+  }else{
+    next()
   }
-  next()
 }
 
 app.use(myLogger)
@@ -41,6 +42,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
+  console.log(req.method)
   if(req.body.value === 'only-for-syom'){
     priv = false
   }
