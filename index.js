@@ -11,7 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-app.use('/public', express.static(__dirname + "/public"))
+app.use(express.static('public'))
+app.use('/images', express.static(__dirname + "public/images"))
 
 let connection = mysql.createConnection({
   host     : process.env.HOST,
@@ -22,7 +23,7 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.redirect('/public/index.html')
+  res.redirect('/index.html')
 })
 
 app.get('/values', (req, res) => {
