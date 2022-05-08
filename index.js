@@ -34,7 +34,7 @@ let connection = mysql.createConnection({
 });
  
 app.get('/', (req, res) => {
-  res.redirect('/public/index.html')
+  res.redirect('index.html')
 })
 
 app.post('/', (req, res) => {
