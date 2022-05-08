@@ -14,8 +14,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const myLogger = function (req, res, next) {
-  if(priv === false){
-    res.redirect('/')
+  if(req.method === 'get'){
+    if(priv === false){
+      res.redirect('/')
+    }
   }
   next()
 }
@@ -24,7 +26,7 @@ app.use(myLogger)
 
 app.use(express.json())
 app.use(express.urlencoded())
-app.use(express.static(__dirname, "public"))
+app.use(express.static(__dirname + "public"))
 
 let connection = mysql.createConnection({
   host     : process.env.HOST,
