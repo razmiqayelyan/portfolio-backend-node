@@ -13,18 +13,18 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-
-app.use(express.json())
-app.use(express.urlencoded())
 const myLogger = function (req, res, next) {
   if(req.method !== 'POST' && priv === true){
-    req.url = '/index.html'
+    req.url = '/'
   }
   next()
 }
-
-app.use(express.static(__dirname + "/public"))
 app.use(myLogger)
+
+
+app.use(express.json())
+app.use(express.urlencoded())
+app.use(express.static(__dirname + "/public"))
 
 
 let connection = mysql.createConnection({
