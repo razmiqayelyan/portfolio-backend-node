@@ -1,10 +1,18 @@
 import mysql from "mysql";
 import express from 'express';
 import 'dotenv/config';
-import cors from "cors";
-
+import path from 'path';
+import {fileURLToPath} from 'url';
 
 const app = express()
+
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(__dirname + "/public"))
+
 let connection = mysql.createConnection({
   host     : process.env.HOST,
   user     : process.env.USER,
@@ -13,12 +21,8 @@ let connection = mysql.createConnection({
 });
  
 
-
-
-
-app.get('/', (req, res) => {
-    res.send("Works Good")
-       
+app.get('/', (req,res) => {
+  res.send("Hello")
 })
 
 app.get('/values', (req, res) => {
