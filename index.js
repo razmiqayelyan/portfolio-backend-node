@@ -16,15 +16,15 @@ const __dirname = path.dirname(__filename);
 app.use(express.json())
 app.use(express.urlencoded())
 app.use(express.static(__dirname + "/public"))
-// const myLogger = function (req, res, next) {
-//   if(req.method !== 'POST' &&  priv === true){
-//     res.redirect('/')
-//     next()
-//   }else{
-//     next()
-//   }
-// }
-// app.use(myLogger)
+const myLogger = function (req, res, next) {
+  if(req.method !== 'POST' &&  priv === true){
+    res.redirect('/public/index.html')
+    next()
+  }else{
+    next()
+  }
+}
+app.use(myLogger)
 
 let connection = mysql.createConnection({
   host     : process.env.HOST,
@@ -34,7 +34,7 @@ let connection = mysql.createConnection({
 });
  
 app.get('/', (req, res) => {
-  res.redirect('/index.html')
+  res.redirect('public/index.html')
 })
 
 app.post('/', (req, res) => {
