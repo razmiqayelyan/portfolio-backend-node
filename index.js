@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.static('public'))
 app.use('/images', express.static(__dirname + "public/images"))
-app.use('/html', express.static(__dirname + "public/index.html"))
+app.use('/html', express.static(__dirname + "public/html"))
 
 
 let connection = mysql.createConnection({
@@ -25,7 +25,7 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.redirect('/html')
+  res.redirect('/html/index.html')
 })
 
 app.get('/values', (req, res) => {
