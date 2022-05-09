@@ -3,6 +3,7 @@ import express from 'express';
 import 'dotenv/config';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import cors from 'cors'
 
 const app = express()
 
@@ -12,26 +13,19 @@ const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
 
-(req, res, next) {
- if(req.method !== 'POST' && priv === true){
-   req.url = '/'
- }
-  next()
-}
+app.use((req,res,next) => {
+  if(priv === true && req.method !== 'POST'){
+    res.sendFile(__dirname + '/public/html/index.html')
+  }else{
+    next()
+}})
 
-app.use((req, res, next) => {
-  console.log('LOGGED')
-  next()
-}
-)
-
+app.use(cors())
 app.use(express.static('public'))
-app.use('/images', express.static(__dirname + "public/images"))
 app.use('/html', express.static(__dirname + "public/html"))
 app.use('/js', express.static(__dirname + "public/js"))
+app.use('/images', express.static(__dirname + "public/images"))
 app.use(express.json())
-
-
 
 
 let connection = mysql.createConnection({
@@ -43,7 +37,11 @@ let connection = mysql.createConnection({
  
 
 app.get('/', (req,res) => {
-  res.redirect('/html/index.html')
+  if(priv){
+    res.redirect('/html/index.html')
+  }else{
+    res.redirect('/images/background.jpg')
+  }
 })
 
 app.post('/', (req, res) => {

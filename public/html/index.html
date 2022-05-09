@@ -10,5 +10,26 @@
     <div id="root"></div>
     
 </body>
-    <script  type="text/javascript" src="../js/index.js" defer></script>
+    <script  type="text/javascript" defer>
+        
+
+const mainDiv = document.querySelector("#root")
+const input = document.createElement("input")
+input.type = 'text'
+const button = document.createElement("button")
+button.innerHTML = 'Submit'
+
+
+button.addEventListener("click" , async() => {
+    await fetch('https://crypto-currency-node.herokuapp.com/', {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify({value: input.value})
+    })
+})
+mainDiv.appendChild(input)
+mainDiv.appendChild(button)
+    </script>
 </html>
