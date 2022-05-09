@@ -7,7 +7,8 @@ import cors from 'cors'
 import bcrypt from "bcrypt";
 
 const app = express()
-app.use(cors())
+
+app.options('*', cors())
 app.use(express.json())
 
 
