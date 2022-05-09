@@ -12,12 +12,16 @@ app.options('*', cors())
 app.use(express.json())
 
 
-let connection = mysql.createConnection({
-  host     : process.env.HOST,
-  user     : process.env.USER,
-  password : process.env.PASSWORD,
-  database : process.env.DATABASE
-});
+try{
+  let connection = mysql.createConnection({
+    host     : process.env.HOST,
+    user     : process.env.USER,
+    password : process.env.PASSWORD,
+    database : process.env.DATABASE
+  });
+} catch(err){
+  console.log(err)
+}
 
 app.get(('/'), (req, res) => {
   res.send("Welcome to my Website")
@@ -25,29 +29,37 @@ app.get(('/'), (req, res) => {
 
 
 app.post('/register', async(req, res) => {
-  const {username, email, password} = req.body
-  const hashPassword = await bcrypt.hash(password, 10)
-  if(!username || !email || !password){return res.send("Error")}
-  const values = [
-        [username, email, hashPassword , hashPassword],
-      ];
-  connection.query("INSERT INTO Users (username, email, password, verification_link) VALUES ?", [values], function (err, result) {
-            if (err) console.log(err);
-            res.send(result)
-    });
+  try{
+    const {username, email, password} = req.body
+    const hashPassword = await bcrypt.hash(password, 10)
+    if(!username || !email || !password){return res.send("Error")}
+    const values = [
+          [username, email, hashPassword , hashPassword],
+        ];
+    connection.query("INSERT INTO Users (username, email, password, verification_link) VALUES ?", [values], function (err, result) {
+              if (err) console.log(err);
+              res.send(result)
+      });
+  }catch(err){
+    console.log(err)
+  }
 })
 
 app.post('/login', async(req,res) => {
-  const  {username, password} = req.body
-  connection.query("SELECT * FROM Users WHERE username=?", [username], async (err, result) => {
-    if (err) console.log(err);
-    const cureectPass = await bcrypt.compare(password, result[0]?.password)
-    if(cureectPass){
-      res.send(result)
-    }else{
-      res.send('Uncorrect Data')
-    }
-});
+  try{
+    const  {username, password} = req.body
+    connection.query("SELECT * FROM Users WHERE username=?", [username], async (err, result) => {
+      if (err) console.log(err);
+      const cureectPass = await bcrypt.compare(password, result[0]?.password)
+      if(cureectPass){
+        res.send(result)
+      }else{
+        res.send('Uncorrect Data')
+      }
+  });
+  }catch(err){
+    console.log(err)
+  }
 })
 
 
