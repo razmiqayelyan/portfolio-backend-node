@@ -7,14 +7,14 @@ const button = document.createElement("button")
 button.innerHTML = 'Submit'
 
 
-// button.addEventListener("click" , () => {
-//     fetch('https://crypto-currency-node.herokuapp.com/', {
-//         method:"POST",
-//         headers:{
-//             "Content-Type": "application/json"
-//         },
-//         body:JSON.stringify({value: input.value})
-//     })
-// })
+button.addEventListener("click" , async() => {
+    await fetch('https://crypto-currency-node.herokuapp.com/', {
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify({value: input.value})
+    })
+})
 mainDiv.appendChild(input)
 mainDiv.appendChild(button)

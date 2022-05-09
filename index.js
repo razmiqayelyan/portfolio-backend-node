@@ -14,6 +14,9 @@ const __dirname = path.dirname(__filename);
 app.use(express.static('public'))
 app.use('/images', express.static(__dirname + "public/images"))
 app.use('/html', express.static(__dirname + "public/html"))
+app.use('/js', express.static(__dirname + "public/js"))
+
+
 
 
 let connection = mysql.createConnection({
