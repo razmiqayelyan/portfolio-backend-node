@@ -39,10 +39,14 @@ app.post('/register', async(req, res) => {
 
 app.post('/login', async(req,res) => {
   const  {username, password} = req.body
-  const hashPassword = await bcrypt.hash(password, 10)
-  connection.query("SELECT * FROM Users WHERE username=?", [username , hashPassword], function (err, result) {
+  connection.query("SELECT * FROM Users WHERE username=?", [username], async (err, result) => {
     if (err) console.log(err);
-    res.send(result)
+    const cureectPass = await bcrypt.compare(password, result[0]?.password)
+    if(cureectPass){
+      res.send(result)
+    }else{
+      res.send('Uncorrect Data')
+    }
 });
 })
 
