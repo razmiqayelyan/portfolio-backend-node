@@ -18,7 +18,7 @@ app.use((req,res,next) => {
     res.sendFile(__dirname + '/public/html/index.html')
   }else{
     setTimeout(() => {
-      priv = false
+      priv = true
     }, 10000)
     next()
 }})
