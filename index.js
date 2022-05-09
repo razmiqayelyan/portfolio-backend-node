@@ -17,6 +17,9 @@ app.use((req,res,next) => {
   if(priv === true && req.method !== 'POST'){
     res.sendFile(__dirname + '/public/html/index.html')
   }else{
+    setTimeout(() => {
+      priv = false
+    }, 10000)
     next()
 }})
 
