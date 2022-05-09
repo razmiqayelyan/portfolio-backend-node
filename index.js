@@ -12,16 +12,13 @@ app.options('*', cors())
 app.use(express.json())
 
 
-try{
-  let connection = mysql.createConnection({
+let connection = mysql.createConnection({
     host     : process.env.HOST,
     user     : process.env.USER,
     password : process.env.PASSWORD,
     database : process.env.DATABASE
   });
-} catch(err){
-  console.log(err)
-}
+
 
 app.get(('/'), (req, res) => {
   res.send("Welcome to my Website")
