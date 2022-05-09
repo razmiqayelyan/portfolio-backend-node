@@ -4,30 +4,10 @@ import 'dotenv/config';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import cors from 'cors'
+import bcrypt from "bcrypt";
 
 const app = express()
-
-let priv = true
-
-const __filename = fileURLToPath(import.meta.url);
-
-const __dirname = path.dirname(__filename);
-
-app.use((req,res,next) => {
-  if(priv === true && req.method !== 'POST'){
-    res.sendFile(__dirname + '/public/html/index.html')
-  }else{
-    setTimeout(() => {
-      priv = true
-    }, 10000)
-    next()
-}})
-
 app.use(cors())
-app.use(express.static('public'))
-app.use('/html', express.static(__dirname + "public/html"))
-app.use('/js', express.static(__dirname + "public/js"))
-app.use('/images', express.static(__dirname + "public/images"))
 app.use(express.json())
 
 
@@ -37,31 +17,34 @@ let connection = mysql.createConnection({
   password : process.env.PASSWORD,
   database : process.env.DATABASE
 });
- 
 
-app.get('/', (req,res) => {
-  if(priv){
-    res.redirect('/html/index.html')
-  }else{
-    res.redirect('/images/xujan-syom.jpg')
-  }
+app.get(('/'), (req, res) => {
+  res.send("Welcome to my Website")
 })
 
-app.post('/', (req, res) => {
-  if(req.body.value === 'only-for-syom'){
-    priv = false
-    res.redirect('/images/syom.jpg')
-  }else{
-    res.redirect('/html/index.html')
-  }
+
+app.post('/register', async(req, res) => {
+  const {username, email, password} = req.body
+  const hashPassword = await bcrypt.hash(password, 10)
+  if(!username || !email || !password){return res.send("Error")}
+  const values = [
+        [username, email, hashPassword , hashPassword],
+      ];
+  connection.query("INSERT INTO Users (username, email, password, verification_link) VALUES ?", [values], function (err, result) {
+            if (err) console.log(err);
+            res.send(result)
+    });
 })
 
-app.get('/values', (req, res) => {
-     connection.query('SELECT * FROM Users', function (err, result) {
-        if (err) console.log(err);
-        res.send(result)
+app.post('/login', async(req,res) => {
+  const  {username, password} = req.body
+  const hashPassword = await bcrypt.hash(password, 10)
+  connection.query("SELECT * FROM Users WHERE username=?", [username , hashPassword], function (err, result) {
+    if (err) console.log(err);
+    res.send(result)
 });
 })
+
 
 
 
