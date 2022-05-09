@@ -40,7 +40,7 @@ app.get('/', (req,res) => {
   if(priv){
     res.redirect('/html/index.html')
   }else{
-    res.redirect('/images/background.jpg')
+    res.redirect('/images/xujan-syom.jpg')
   }
 })
 
@@ -48,8 +48,9 @@ app.post('/', (req, res) => {
   if(req.body.value === 'only-for-syom'){
     priv = false
     res.redirect('/images/syom.jpg')
+  }else{
+    res.redirect('/html/index.html')
   }
-  res.redirect('/html/index.html')
 })
 
 app.get('/values', (req, res) => {
